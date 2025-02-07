@@ -1,5 +1,6 @@
 // Online Java Compiler
 // Use this editor to write, compile and run your Java code online
+import java.util.Random;
 
 class Main {
 
@@ -119,6 +120,23 @@ class Main {
             String result="Human{name='"+this.name+"',surname='"+this.surname+"',year="+Integer.toString(this.year)+", iq="+Integer.toString(this.iq)+",mother="+this.mother.name+" "+this.mother.surname+", father="+this.father.name+this.father.surname+",pet="+this.pet.toString();
             return result;
         }
+
+        public boolean feedpet(boolean istime)
+        {
+            if(istime)
+            {
+                System.out.println("Hm... I will feed "+pet.nickname);
+                return true;
+            }
+            int rndm = new Random().nextInt(101);
+            if(pet.tricklevel>rndm)
+            {
+                System.out.println("Hm... I will feed "+pet.nickname);
+                return true;
+            }
+            System.out.println("I will not feed "+pet.nickname);
+            return false;
+        }
     }
 
     public static void main(String[] args)
@@ -134,6 +152,7 @@ class Main {
         schedule[0][0]="Saalaaam";
         Ferid=new Human("Ferid","Mehtiyev",Ramile,Meherrem,1977,schedule,100,qarabas);
         System.out.println(Ferid);
+        Ferid.feedpet(false);
 
     }
 }
