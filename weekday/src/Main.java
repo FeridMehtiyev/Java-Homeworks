@@ -70,8 +70,10 @@ public class Main {
                     {
                         schedule[i][1] = new Scanner(System.in).nextLine();
                         System.out.println("Successfully changed!");
+                        break;
                     }
                 }
+                if(i==7) System.out.println("The weekday's name is false!");
             }
         }
   ;  }
