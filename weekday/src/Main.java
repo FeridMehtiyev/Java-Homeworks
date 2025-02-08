@@ -62,7 +62,7 @@ public class Main {
             }
             if(i==7)
             {
-                day = day.split(" ")[1];
+                if(day.split(" ").length==2) day = day.split(" ")[1];
                 System.out.println("Please input the new task of "+day);
                 for(i=0;i<7;i++)
                 {
