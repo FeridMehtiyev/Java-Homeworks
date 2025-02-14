@@ -1,5 +1,6 @@
 package Version2;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Human
@@ -16,12 +17,14 @@ public class Human
     public String getName() {return name;}
     public String getSurname() {return surname;}
     public String[][] getSchedule() {return schedule;}
+    public Family getFamily() {return family;}
 
     public void setIq(int iq) {this.iq = iq;}
     public void setName(String name) {this.name = name;}
     public void setSchedule(String[][] schedule) {this.schedule = schedule;}
     public void setSurname(String surname) {this.surname = surname;}
     public void setYear(int year) {this.year = year;}
+    public void setFamily(Family family) {this.family = family;}
 
     public Human(String name, String surname, int year)
     {
@@ -83,6 +86,21 @@ public class Human
     public String toString()
     {
         String result="Human{name='"+this.name+"',surname='"+this.surname+"',year="+Integer.toString(this.year)+", iq="+Integer.toString(this.iq);
+        for(int i=0;i<schedule.length;i++) if(schedule[i][0]!=null) result+=", schedule["+i+"]="+schedule[i][0];
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass()!=this.getClass()) return false;
+        if(obj==this) return true;
+        Human h = (Human)obj;
+        // Family equalsi Human equalsi cagirar oda o birin
+        return this.name.equals(h.name) && this.surname.equals(h.surname) && this.year==h.year && this.iq==h.iq && Arrays.deepEquals(this.schedule,h.schedule);
+    }
+
+    @Override
+    public int hashCode() {
+        return this.name.hashCode() + this.surname.hashCode() + this.year + this.iq + Arrays.deepHashCode(this.schedule);
     }
 }

@@ -59,8 +59,16 @@ public class Pet
         String result = this.species + "{nickname='" + this.nickname + "',age=" + Integer.toString(this.age)+", tricklevel="+ Integer.toString(this.tricklevel)+", habits=[";
         for(int i=0;i<habits.length;i++)
         {
-            result+=habits[i]+", ";
+            if(habits[i]!=null) result+=habits[i]+", ";
         }
         return result+"]}";
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass()!=this.getClass()) return false;
+        if(obj==this) return true;
+        Pet pet = (Pet)obj;
+        return this.nickname.equals(pet.nickname) && this.age==pet.age && this.species.equals(pet.species) && this.tricklevel==pet.tricklevel && this.habits.equals(pet.habits);
     }
 }
