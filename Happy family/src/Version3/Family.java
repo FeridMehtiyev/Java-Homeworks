@@ -1,9 +1,10 @@
-package Version2;
+package Version3;
 
 import java.util.Arrays;
 
 public class Family
 {
+    @SuppressWarnings("deprecation")
     private Human father;
     private Human mother;
     private Human[] children;
@@ -40,19 +41,32 @@ public class Family
         }
     }
 
-    public Family(Human father,Human mother)
+    public Family(Human father, Human mother)
     {
-        father.setFamily(this);
-        mother.setFamily(this);
-        children = new Human[100];
-        childnumber=0;
-        this.father = father;
-        this.mother = mother;
-        this.pet = new Pet();
+        if(father==null || mother==null)
+        {
+            System.out.println("father or mother is null, Family could not be created");
+        }
+        else {
+            father.setFamily(this);
+            mother.setFamily(this);
+            children = new Human[100];
+            childnumber=0;
+            this.father = father;
+            this.mother = mother;
+            this.pet = new Pet();
+        }
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        System.out.println("Family destroyed");
+        super.finalize();
     }
 
     public boolean addChild(Human child)
     {
+        if(child==null) return false;
         if(childnumber==children.length) return false;
         children[childnumber++]=child;
         child.setFamily(this);
@@ -70,6 +84,7 @@ public class Family
 
     public boolean deleteChild(Human child)
     {
+        if(child==null) return false;
         if(childnumber==0) return false;
         int i;
         for(i=0;i<childnumber;i++)
@@ -91,6 +106,7 @@ public class Family
 
     @Override
     public boolean equals(Object obj) {
+        if(obj==null) return false;
         if(obj.getClass()!=this.getClass()) return false;
         if(obj==this) return true;
         Family family = (Family) obj;
