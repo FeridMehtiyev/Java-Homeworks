@@ -73,9 +73,125 @@ public class Main {
         }
         return null;
     }
+    public static Course[] loadCourses() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Course[] courses = mapper.readValue(new File("courses.json"), Course[].class);
+            return courses;
+        } catch (IOException e) {
+            if (e.getClass() == FileNotFoundException.class) {
+                mapper = new ObjectMapper();
+                Subject[] subjects1 = {Subject.Math, Subject.English};
+                Teacher[] teachers1 = {
+                        new Teacher("John", "Doe", 35, true, Subject.Math),
+                        new Teacher("Jane", "Smith", 40, false, Subject.English)
+                };
+                Course course1 = new Course("Basic Education Course", subjects1, teachers1);
+                Subject[] subjects2 = {Subject.ComputerScience, Subject.Biology};
+                Teacher[] teachers2 = {
+                        new Teacher("Michael", "Brown", 50, true, Subject.ComputerScience),
+                        new Teacher("Emily", "Johnson", 45, false, Subject.Biology)
+                };
+                Course course2 = new Course("Science and Technology Course", subjects2, teachers2);
+                Subject[] subjects3 = {Subject.Math, Subject.Biology, Subject.English};
+                Teacher[] teachers3 = {
+                        new Teacher("John", "Doe", 35, true, Subject.Math),
+                        new Teacher("Emily", "Johnson", 45, false, Subject.Biology),
+                        new Teacher("Jane", "Smith", 40, false, Subject.English)
+                };
+                Course course3 = new Course("Advanced Education Course", subjects3, teachers3);
+                Course[] courses = new Course[]{course1, course2, course3};
+                try {
+                    mapper.writeValue(new File("courses.json"), courses);
+                } catch (IOException e1) {
+                    System.out.println("Error writing to file");
+                }
+                return loadCourses();
+            }
+        }
+        return null;
+    }
+    public static Exam[] loadExams() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Exam[] exams = mapper.readValue(new File("exams.json"), Exam[].class);
+            return exams;
+        } catch (IOException e) {
+            if (e.getClass() == FileNotFoundException.class) {
+                mapper = new ObjectMapper();
+                Subject[] subjects1 = {Subject.Math, Subject.English};
+                Teacher[] teachers1 = {
+                        new Teacher("John", "Doe", 35, true, Subject.Math),
+                        new Teacher("Jane", "Smith", 40, false, Subject.English)
+                };
+                Course course1 = new Course("Basic Education Course", subjects1, teachers1);
+                Subject[] subjects2 = {Subject.ComputerScience, Subject.Biology};
+                Teacher[] teachers2 = {
+                        new Teacher("Michael", "Brown", 50, true, Subject.ComputerScience),
+                        new Teacher("Emily", "Johnson", 45, false, Subject.Biology)
+                };
+                Course course2 = new Course("Science and Technology Course", subjects2, teachers2);
+                Subject[] subjects3 = {Subject.Math, Subject.Biology, Subject.English};
+                Teacher[] teachers3 = {
+                        new Teacher("John", "Doe", 35, true, Subject.Math),
+                        new Teacher("Emily", "Johnson", 45, false, Subject.Biology),
+                        new Teacher("Jane", "Smith", 40, false, Subject.English)
+                };
+                Course course3 = new Course("Advanced Education Course", subjects3, teachers3);
+                Course[] courses = new Course[]{course1, course2, course3};
+                Exam exam1 = new Exam("Midterm Math Exam", Subject.Math, courses[0].getTeachers(), courses[0]);
+                Exam exam2 = new Exam("Final Computer Science Exam", Subject.ComputerScience, courses[1].getTeachers(), courses[1]);
+                Exam exam3 = new Exam("Biology Final Exam", Subject.Biology, courses[2].getTeachers(), courses[2]);
+
+                Exam[] exams = new Exam[]{exam1, exam2, exam3};
+
+                try {
+                    mapper.writeValue(new File("exams.json"), exams);
+                } catch (IOException e1) {
+                    System.out.println("Error writing to file");
+                }
+                return exams;
+            }
+        }
+        return null;
+    }
+
+    public static void writeStudents(Student[] students) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File("students.json"), students);
+    }
+    public static void writeTeachers(Teacher[] teachers) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File("teachers.json"), teachers);
+    }
+    public static void writeCourses(Course[] courses) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File("courses.json"), courses);
+    }
+    public static void writeExams(Exam[] exams) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(new File("exams.json"), exams);
+    }
 
     public static void main(String[] args) {
         Student[] students = loadStudents();
         Teacher[] teachers = loadTeachers();
+        Course[] courses = loadCourses();
+        Exam[] exams = loadExams();
+
+        //change here
+
+
+        try
+        {
+            writeTeachers(teachers);
+            writeStudents(students);
+            writeCourses(courses);
+            writeExams(exams);
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error writing to file");
+        }
     }
 }

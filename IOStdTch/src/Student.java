@@ -20,7 +20,7 @@ public class Student extends Human implements Learnable {
     public boolean asses(Subject subject) {
         int index = subject.ordinal();
         grades[index]=Arrays.copyOf(grades[index], grades[index].length+1);
-        grades[index][grades.length]=knowledge[index];
+        grades[index][grades.length-1]=knowledge[index];
         return true;
     }
 
